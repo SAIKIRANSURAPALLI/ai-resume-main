@@ -1,29 +1,28 @@
 import React from "react";
-import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { UserButton, useUser } from "@clerk/clerk-react";
+import { Button } from "@/components/ui/button";
 
-function Header() {
-  const { user, isSignedIn } = useUser();
+export default function Header() {
+  const { isSignedIn } = useUser();
+
   return (
-    <div className="p-3 px-5 flex justify-between shadow-md">
-      <img src="/logo.png" width={80} height={80} />
+    <div className="p-3 px-5 flex justify-between shadow-md bg-background">
+      <Link to="/">
+        <img src="/logo.png" width={80} height={80} alt="Logo" />
+      </Link>
       {isSignedIn ? (
         <div className="flex gap-2 items-center">
-          <Link to={"/dashboard"}>
-            <Button variant="outline">DashBoard</Button>
+          <Link to="/dashboard">
+            <Button variant="outline">Dashboard</Button>
           </Link>
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
         </div>
       ) : (
-        <Link to={"/auth/sign-in"}>
-          <div className="mt-5">
-            <Button>Get Started</Button>
-          </div>
+        <Link to="/auth/sign-in">
+          <Button>Get Started</Button>
         </Link>
       )}
     </div>
   );
 }
-
-export default Header;
